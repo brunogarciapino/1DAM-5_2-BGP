@@ -89,7 +89,7 @@ interface Dispara {
         }
     }
 
-    class casa(
+    class Casa(
         var tipo: String,
         var direccion: String,
         var codigoPostal: Int,
@@ -102,7 +102,7 @@ interface Dispara {
         }
     }
 
-    class bocadillo(
+    class Bocadillo(
         var tipo: String,
         var ingredientes: String,
         var salsa: String,
@@ -134,12 +134,12 @@ interface Dispara {
         var Rk9: Pistola = Pistola("Rk9", 15, 1, "9mm", 2, "Pqueño")
         var AK47: Rifle = Rifle("AK47", 30, 3, "11mm", 3, "Amplio")
         var RPG: Bazooka = Bazooka("RPG", 15, 1, "Explosiva", 10, "Amplio")
-        var casa1: casa = casa("Apartamento", "Avenida los milagros", 11204, 35, 4)
-        var bocadilloTortilla: bocadillo =
-            bocadillo("Bocadillo tortilla", "Pan, tortilla y pimiento", "Mayonesa", 40, 2)
+        var Casa1: Casa = Casa("Apartamento", "Avenida los milagros", 11204, 35, 4)
+        var BocadilloTortilla: Bocadillo =
+            Bocadillo("Bocadillo tortilla", "Pan, tortilla y pimiento", "Mayonesa", 40, 2)
         var Mustang: coche = coche("Ford Mustang", 240, "negro", 33, 2)
 
-        var listaArma = listOf<Dispara>(Rk9, RPG, AK47, casa1, bocadilloTortilla, Mustang)
+        var listaArma = listOf<Dispara>(Rk9, RPG, AK47, Casa1, BocadilloTortilla, Mustang)
         var mapaAleatorio = mutableMapOf<Int, Dispara>()
 
         //Se crea un bucle para que las armas disparen de forma aleatoria
