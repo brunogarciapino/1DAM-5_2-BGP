@@ -1,3 +1,7 @@
+import java.util.logging.Level
+import java.util.logging.LogManager
+
+//Creamos la interfaz Dispara para que objetos que de normal no disparen puedan disparar
 interface Dispara {
     var municion: Int
     var municionARestar: Int
@@ -88,7 +92,7 @@ interface Dispara {
             return municion
         }
     }
-
+//Se crea una clase Casa que es de tipo dispara, es decir que usa la interfaz dispara
     class Casa(
         var tipo: String,
         var direccion: String,
@@ -101,7 +105,7 @@ interface Dispara {
             return tipo
         }
     }
-
+//Se crea una clase Casa que es de tipo dispara, es decir que usa la interfaz dispara
     class Bocadillo(
         var tipo: String,
         var ingredientes: String,
@@ -115,6 +119,7 @@ interface Dispara {
         }
     }
 
+//Se crea una clase Casa que es de tipo dispara, es decir que usa la interfaz dispara
     class coche(
         var marca: String,
         var caballos: Int,
@@ -130,6 +135,9 @@ interface Dispara {
     }
 
     fun main() {
+        //Se pone la variable l para poder poner logs en vez de println
+        val l = LogManager.getLogManager().getLogger("").apply { level = Level.ALL }
+
         //Instancio 6 objetos, cada uno de una subclase distinta
         var Rk9: Pistola = Pistola("Rk9", 15, 1, "9mm", 2, "Pqueño")
         var AK47: Rifle = Rifle("AK47", 30, 3, "11mm", 3, "Amplio")
@@ -147,9 +155,9 @@ interface Dispara {
             var random = (0..5).random()
             mapaAleatorio.put(i, listaArma[random])
         }
-        //Imprime los objetos seleccionados de forma aleatoria que van a disparar
+        //Se hace un log para comprobar que el objeto que va a disparar es el mismo que el que dispara
         for (it in mapaAleatorio) {
-            println("${it.value}")
+            l.info("${it.value}")
 
         }
         println()
