@@ -2,26 +2,32 @@ interface Dispara {
     var municion: Int
     var municionARestar: Int
 
+    fun dispara(): Int {
+        this.municion = municion - municionARestar
+        return municion
+
+    }
+
     fun recarga(): Int {
         this.municion += municion
         return this.municion
     }
-
+}
 
     //Superclase de las armas
     abstract class ArmaDeFuego(
-        open var nombre: String, open var municion: Int, open var municionARestar: Int, open var tipoDeMunicion: String,
+        open var nombre: String, override var municion: Int, override var municionARestar: Int, open var tipoDeMunicion: String,
         open var danio: Int, open var radio: String
-    ) {
+    ):Dispara {
 
         //Método que hace que un arma dispare y se heredará a las demás clases
-        open fun dispara(): Int {
+        override fun dispara(): Int {
             this.municion = municion - municionARestar
             return municion
         }
 
         //Método que hace que un arma dispare y se heredará a las demás clases
-        open fun recarga(): Int {
+        override fun recarga(): Int {
             this.municion += municion
             return this.municion
         }
@@ -70,7 +76,8 @@ interface Dispara {
     }
 
     //Subclase Bazooka
-    class Bazooka(nombre: String, municion: Int, municionARestar: Int, tipoDeMunicion: String, danio: Int, radio: String
+    class Bazooka(
+        nombre: String, municion: Int, municionARestar: Int, tipoDeMunicion: String, danio: Int, radio: String
     ) : ArmaDeFuego(nombre, municion, municionARestar, tipoDeMunicion, danio, radio) {
         //Ponemos este metodo para que al llamar al objeto salga con su nombre y no con el de la clase
         override fun toString(): String = nombre
@@ -82,55 +89,75 @@ interface Dispara {
         }
     }
 
-    class casa(var tipo: String, var direccion: String, var codigoPostal: Int, override var municion: Int, override var municionARestar: Int) : Dispara {
+    class casa(
+        var tipo: String,
+        var direccion: String,
+        var codigoPostal: Int,
+        override var municion: Int,
+        override var municionARestar: Int
+    ) : Dispara {
 
         override fun toString(): String {
             return tipo
         }
     }
 
-    class bocadillo(var tipo: String, var ingredientes: String, var salsa: String, override var municion: Int, override var municionARestar: Int) : Dispara {
+    class bocadillo(
+        var tipo: String,
+        var ingredientes: String,
+        var salsa: String,
+        override var municion: Int,
+        override var municionARestar: Int
+    ) : Dispara {
 
         override fun toString(): String {
             return tipo
         }
     }
 
-    class coche(var marca: String, var caballos: Int, var color: String, override var municion: Int, override var municionARestar: Int) : Dispara {
+    class coche(
+        var marca: String,
+        var caballos: Int,
+        var color: String,
+        override var municion: Int,
+        override var municionARestar: Int
+    ) : Dispara {
 
         override fun toString(): String {
             return marca
         }
+
     }
 
-fun main() {
-    //Instancio 6 objetos, cada uno de una subclase distinta
-     var Rk9: Pistola = Pistola("Rk9", 15, 1, "9mm", 2, "Pqueño")
-     var AK47: Rifle = Rifle("AK47", 30, 3, "11mm", 3, "Amplio")
-     var RPG: Bazooka = Bazooka("RPG", 15, 1, "Explosiva", 10, "Amplio")
-     var casa1: casa = casa("Apartamento", "Avenida los milagros", 11204, 35, 4)
-     var bocadilloTortilla: bocadillo = bocadillo("Bocadillo tortilla", "Pan, tortilla y pimiento", "Mayonesa", 40, 2)
-     var Mustang: coche = coche("Ford Mustang",240, "negro", 33, 2)
+    fun main() {
+        //Instancio 6 objetos, cada uno de una subclase distinta
+        var Rk9: Pistola = Pistola("Rk9", 15, 1, "9mm", 2, "Pqueño")
+        var AK47: Rifle = Rifle("AK47", 30, 3, "11mm", 3, "Amplio")
+        var RPG: Bazooka = Bazooka("RPG", 15, 1, "Explosiva", 10, "Amplio")
+        var casa1: casa = casa("Apartamento", "Avenida los milagros", 11204, 35, 4)
+        var bocadilloTortilla: bocadillo =
+            bocadillo("Bocadillo tortilla", "Pan, tortilla y pimiento", "Mayonesa", 40, 2)
+        var Mustang: coche = coche("Ford Mustang", 240, "negro", 33, 2)
 
-     var listaArma = listOf(Rk9, RPG, AK47, casa1, bocadilloTortilla, Mustang)
-     var mapaAleatorio = mutableMapOf<Int, ArmaDeFuego>()
+        var listaArma = listOf<Dispara>(Rk9, RPG, AK47, casa1, bocadilloTortilla, Mustang)
+        var mapaAleatorio = mutableMapOf<Int, Dispara>()
 
-     //Se crea un bucle para que las armas disparen de forma aleatoria
-     for (i in 1..6) {
-         var random = (0..5).random()
-         mapaAleatorio.put(i, listaArma[random] as ArmaDeFuego)
+        //Se crea un bucle para que las armas disparen de forma aleatoria
+        for (i in 1..6) {
+            var random = (0..5).random()
+            mapaAleatorio.put(i, listaArma[random])
         }
-     //Imprime los objetos seleccionados de forma aleatoria que van a disparar
-     for (it in mapaAleatorio) {
-          println("${it.value}")
+        //Imprime los objetos seleccionados de forma aleatoria que van a disparar
+        for (it in mapaAleatorio) {
+            println("${it.value}")
 
         }
         println()
-     //Se imprimen por pantalla los objetos que disparan y cuantas veces de forma aleatoria
-     for (i in 1..6) {
-         println("${mapaAleatorio.get(i)?.nombre} a disparado = ${mapaAleatorio.get(i)?.dispara()}")
+        //Se imprimen por pantalla los objetos que disparan y cuantas veces de forma aleatoria
+        for (i in 1..6) {
+            println("${mapaAleatorio.get(i)} a disparado = ${mapaAleatorio.get(i)?.dispara()}")
         }
 
 
     }
-}
+
